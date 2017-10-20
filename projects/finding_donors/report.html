@@ -13246,7 +13246,7 @@ Very flexible due to the different kernels available to use and transform the da
 <li>What are the weaknesses of the model; when does it perform poorly?<br>
 SVMs do not directly provide probability estimates, these are calculated using an expensive five-fold cross-validation <a href="http://scikit-learn.org/stable/modules/svm.html">source</a></li>
 <li>What makes this model a good candidate for the problem, given what you know about the data?<br>
-The different kernels available could potentially help with the class unbalance. If the classes are not linearly separable, the kernel trick can help to separate them without incurring in overfiting the data.</li>
+The different kernels available could potentially help with complex patterns in the data</li>
 </ul>
 
 </div>
@@ -14229,7 +14229,8 @@ Look at the graph at the bottom left from the cell above(the visualization creat
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
-<p>The Adaboost model is an ensemble algorithm, meaning that it builds lots of simple models and then uses the outcome of all to come up with the predictions of new unseen data. The algorithm used here by default makes use of simple decision trees as the base simple model. Decision trees are a very popular machine learning model, in which the data is classified using a series of decisions about its features. For example, a node could separate the data if the person is aged above or below 40. Filtering the data in sequence until it reaches the end of the branch, where the class is assigned. Another particular aspect of Adaboost is that when this simple models make a wrong prediction, the algorithm weighs this examples so that the next simple model will take those as more important to get right. The combination makes for a very powerful classification model.</p>
+<p>The Adaboost model is an ensemble algorithm, meaning that it builds lots of simple models and then uses the outcome of all to come up with the predictions of new unseen data. The algorithm used here by default makes use of simple decision trees as the base simple model. Decision trees are a very popular machine learning model, in which the data is classified using a series of decisions about its features. For example, a node could separate the data if the person is aged above or below 40. Filtering the data in sequence until it reaches the end of the branch, where the class is assigned. This splits of the data occur in order to make the subsequent nodes more homogeneous. This is how the algorithm decides with that features to split the data.<br></p>
+<p>Another particular aspect of Adaboost is that when this simple models make a wrong prediction, the algorithm weighs this examples so that the next simple model will take those as more important to get right. The combination makes for a very powerful classification model.</p>
 
 </div>
 </div>
