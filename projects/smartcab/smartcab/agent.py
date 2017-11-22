@@ -25,7 +25,7 @@ class LearningAgent(Agent):
         # Set any additional class parameters as needed
         self.optimized = True
         self.trial = 0
-        self.a = 0.005
+        self.a = 0.003
 
 
     def reset(self, destination=None, testing=False):
@@ -51,7 +51,7 @@ class LearningAgent(Agent):
             self.epsilon = self.epsilon - 0.05
         else:
             self.epsilon = math.pow(math.e, -self.a*self.trial)
-            self.alpha = max(0.9-(self.trial*0.002), 0.4)
+            self.alpha = 0.7 #max(0.9-(self.trial*0.002), 0.4)
                                     
         return None
 
@@ -110,8 +110,9 @@ class LearningAgent(Agent):
         # When learning, check if the 'state' is not in the Q-table
         # If it is not, create a new dictionary for that state
         #   Then, for each action available, set the initial Q-value to 0.0
-        if state not in self.Q:
-            self.Q[state] = {key: 0.0 for key in self.valid_actions}
+        if self.learning:
+            if state not in self.Q:
+                self.Q[state] = {key: 0.0 for key in self.valid_actions}
 
         return
 
@@ -156,7 +157,8 @@ class LearningAgent(Agent):
         ###########
         # When learning, implement the value iteration update rule
         #   Use only the learning rate 'alpha' (do not use the discount factor 'gamma')
-        self.Q[state][action] += reward * self.alpha
+        if self.learning:
+            self.Q[state][action] = self.Q[state][action] * (1-self.alpha) + reward * self.alpha
 
         return
 
@@ -215,7 +217,7 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=15, tolerance=0.2)
+    sim.run(n_test=10, tolerance=0.2)
 
 
 if __name__ == '__main__':
