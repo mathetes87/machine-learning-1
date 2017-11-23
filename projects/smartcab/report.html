@@ -16316,7 +16316,7 @@ SUVORK5CYII=
 <ul>
 <li>For epsilon I used $ \epsilon = e^{-at} $, for a = 0.003 and t being the number of trials.</li>
 <li>Approximately 530 training trials were run before the agent started testing phase.</li>
-<li>The epsilon-tolerance used was 0.2, the goal was to have a higher epsilon for a while but not to have the PC running the simulation for too long. The alpha was a constant set to 0.7.</li>
+<li>The epsilon-tolerance used was 0.2, the goal was to have a higher epsilon for a while but not to have the PC running the simulation for too long. The alpha was a constant set to 0.7. I tried different constant values (0.8 and 0.6) and variations of different functions (cosine, exponential of negative values, linear) but the best result achieved was just using this constant value.</li>
 <li>The agent improved a lot in all aspects. Probably the most important factor in play was the much greater number of trials, so the agent was able to gather a lot more information regarding each state and action pair.</li>
 <li>The policy learnt seems to be good enough and it shows in the plots as well as the ratings. </li>
 <li>I'm satisfied with both of them. The Q algorithm succesfully implemented and the number of trials to learn the policy meant that both ratings achieved an A+.</li>
@@ -16363,7 +16363,7 @@ SUVORK5CYII=
 <li>The optimal policy would be similar to this:<ul>
 <li>Do not move in any direction if the traffic light is red.</li>
 <li>If traffic light is green follow the waypoint direction unless this would cause a crash.</li>
-<li>If another car is blocking the way that needs to be followed, take another direction or wait for the car to pass. The optimal action to follow would need to be learned from experience by the agent as it is not clear which one is best, but to learn this it would be necessary to change a great deal of the simulation code since in the current state future rewards can't be implemented, as explained in the next question's answer.</li>
+<li>If another car is blocking the way that needs to be followed, wait for the car to pass.</li>
 </ul>
 </li>
 <li><p>Certainly there are states where the policy is not the optimal one, that's why the plots show some level of bad decisions and not a perfect reliability, even though the ratings are perfect. In the following examples the state is named from the features as <code>waypoint_light_left_oncoming_right</code></p>
@@ -16400,7 +16400,7 @@ forward_red_left_None_forward
 -- right : 0.46
 -- None : 0.00
 -- left : 0.00</li>
-<li>Cab will go forward, but waypoints points to the right: <br>
+<li>Cab will go forward, but waypoint points to the right: <br>
 right_green_right_None_right
 -- forward : 1.42
 -- right : 0.00
@@ -16411,6 +16411,7 @@ right_green_right_None_right
 </ol>
 </li>
 </ol>
+<p>In both cases the suboptimal action is taken because the agent never explored the optimal ones. Given enough trials and appropriate parameters, the agent would have taken the optimal policy every time.</p>
 
 </div>
 </div>
