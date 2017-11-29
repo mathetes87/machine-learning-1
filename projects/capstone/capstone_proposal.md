@@ -15,7 +15,7 @@ Autotrading, on the other hand, originates at the emergence of online retail tra
 ### Problem Statement
 _(approx. 1 paragraph)_
 
-In this section, clearly describe the problem that is to be solved. The problem described should be well defined and should have at least one relevant potential solution. Additionally, describe the problem thoroughly such that it is clear that the problem is quantifiable (the problem can be expressed in mathematical or logical terms) , measurable (the problem can be measured by some metric and clearly observed), and replicable (the problem can be reproduced and occurs more than once).
+If we knew the future price of a Forex pair with enough certainty, we could surely operate in this highly volatile market with an automated trading strategy. Even more, if a model shows that this is possible, a Reinforcement Learning approach fed with the output of this model could learn to be highly profitable. The problem is that to predict the future price of a Forex pair, or even its _trend_, is a very complex thing and can take decades for a professional trader to master, so as to make enough money to live out of this job alone.
 
 ### Datasets and Inputs
 _(approx. 2-3 paragraphs)_
@@ -45,25 +45,35 @@ A sneak peek into the data throws the following table:
 | 2012_1_2_3_10_0 | 1.29357   | 1.29376  | 1.29382  | 1.29357 | 35.843373494     | 39.9864597892    | -0.000154469658795 | -9.01779849445e-05 | -6.42916738504e-05 |
 | 2012_1_2_3_15_0 | 1.29351   | 1.29355  | 1.29357  | 1.29348 | 29.1729323308    | 35.3774372328    | -0.000181261097638 | -0.000115268723952 | -6.59923736861e-05 |
 
-In this section, the dataset(s) and/or input(s) being considered for the project should be thoroughly described, such as how they relate to the problem and why they should be used. Information such as how the dataset or input is (was) obtained, and the characteristics of the dataset or input, should be included with relevant references and citations as necessary It should be clear how the dataset(s) or input(s) will be used in the project and whether their use is appropriate given the context of the problem.
+For the project, the `time` column will help to order the data chronologically. The other features will be used to predict the relative position of the next candle's `close` price.
 
 ### Solution Statement
 _(approx. 1 paragraph)_
 
-In this section, clearly describe a solution to the problem. The solution should be applicable to the project domain and appropriate for the dataset(s) or input(s) given. Additionally, describe the solution thoroughly such that it is clear that the solution is quantifiable (the solution can be expressed in mathematical or logical terms) , measurable (the solution can be measured by some metric and clearly observed), and replicable (the solution can be reproduced and occurs more than once).
+To predict the close price for the EURUSD pair, a moving window consisting of some of the immediately previous candles will be fed into an LSTM deep neural network. The information given to the network is the same that a human professional trader could base his/hers strategy upon, and given that there are profitable professional traders, it is reasonable to expect that a machine learning approach could achieve good results, if not better than what a human would. The approach to solve our problem will be to predict 4 classes: way_up, shy_up, shy_down, way_down. This predictions, with their respective confidences, will unable us to build a simple trading strategy that will yield simulated monetary results.
 
 ### Benchmark Model
 _(approximately 1-2 paragraphs)_
 
-In this section, provide the details for a benchmark model or result that relates to the domain, problem statement, and intended solution. Ideally, the benchmark model or result contextualizes existing methods or known information in the domain and problem given, which could then be objectively compared to the solution. Describe how the benchmark model or result is measurable (can be measured by some metric and clearly observed) with thorough detail.
+In [this blog post] (https://www.quantinsti.com/blog/machine-learning-application-forex-markets-working-models/) a Support Vector Machine is used with a dataset of the same EURUSD pair, but with candles of 1 hour. The author tries to predict wether the price will go up or down on the next candle, and achieves slightly more than 50% accuracy. Given that I will be using 4 classes instead of those 2, both upper movement predictions will be counted as 1 class (and the same for downward moving predictions) in order to make a comparison with this benchmark. As a side note, although the random guess accuracies are not reported in the blog post, we can safely assume that we would have a hard time developing a profitable strategy with those predictions. I will also take as a benchmark the performance of random guessing as well as a simple linear regression model. 
 
 ### Evaluation Metrics
 _(approx. 1-2 paragraphs)_
 
-In this section, propose at least one evaluation metric that can be used to quantify the performance of both the benchmark model and the solution model. The evaluation metric(s) you propose should be appropriate given the context of the data, the problem statement, and the intended solution. Describe how the evaluation metric(s) are derived and provide an example of their mathematical representations (if applicable). Complex evaluation metrics should be clearly defined and quantifiable (can be expressed in mathematical or logical terms).
+The main evaluation metric that I will use will be the `F-1 score`. I will use this metric because it gives in a single number a lot of information about the performance of the model in the whole confusion matrix paradigm. In that sense it is way better than an `accuracy` metric, for example. To compute the evaluation metric I will have to first compute the confusion matrix components, and with those use the formula `F-1 = 2*(Recall*Precision)/(Recall+Precision)` being `Precision = TP/(TP+FP)` and `Recall = TP/(TP+FN)`.
 
 ### Project Design
 _(approx. 1 page)_
+
+To arrive to a succesful solution, during the project I will undergo the following meta-steps: getting to kow the data, preprocessing the data, writing the code to feed the data, writing the model, training and tuning the model and finally testing how well a basic trading strategy would work out given those predictions. Let's break down this steps into more detail.
+
+1. Getting to know the data
+
+It is essential to know the data we will be later using so as to be able to properly identify and fix early problems that may arise from outliers or some missing preprocessing steps. In particular, I will be looking at mean values, variance, maximum and minimum values, etc. Also, given the nature of the data, I will try to identify clear changes in the patterns exhibit along the years because the market may very well have changed from 2012 to today, and this would definitely impact in a negative way any model that takes into account data that is no longer relevant.
+
+2. Preprocessing the data
+
+As I'm going to mainly use a deep neural network for my predictions, I will normalize the data between 0 and 1 so the activations behave nicely. Also, I already spotted some incorrect values in the data, probably outputed incorrectly by Metatrader. For example, there was a 129 price surrounded by 1.29 prices. I would also consider reducing the floating point precision of the data in order to speed up the network
 
 In this final section, summarize a theoretical workflow for approaching a solution given the problem. Provide thorough discussion for what strategies you may consider employing, what analysis of the data might be required before being used, or which algorithms will be considered for your implementation. The workflow and discussion that you provide should align with the qualities of the previous sections. Additionally, you are encouraged to include small visualizations, pseudocode, or diagrams to aid in describing the project design, but it is not required. The discussion should clearly outline your intended workflow of the capstone project.
 
