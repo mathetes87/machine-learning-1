@@ -15,7 +15,7 @@ Autotrading, on the other hand, originates at the emergence of online retail tra
 ### Problem Statement
 _(approx. 1 paragraph)_
 
-In this section, clearly describe the problem that is to be solved. The problem described should be well defined and should have at least one relevant potential solution. Additionally, describe the problem thoroughly such that it is clear that the problem is quantifiable (the problem can be expressed in mathematical or logical terms) , measurable (the problem can be measured by some metric and clearly observed), and replicable (the problem can be reproduced and occurs more than once).
+If we knew the future price of a Forex pair with enough certainty, we could surely operate in this highly volatile market with an automated trading strategy. Even more, if a model shows that this is possible, a Reinforcement Learning approach fed with the output of this model could learn to be highly profitable. The problem is that to predict the future price of a Forex pair, or even its _trend_, is a very complex thing and can take decades for a professional trader to master, so as to make enough money to live out of this job alone.
 
 ### Datasets and Inputs
 _(approx. 2-3 paragraphs)_
@@ -45,15 +45,17 @@ A sneak peek into the data throws the following table:
 | 2012_1_2_3_10_0 | 1.29357   | 1.29376  | 1.29382  | 1.29357 | 35.843373494     | 39.9864597892    | -0.000154469658795 | -9.01779849445e-05 | -6.42916738504e-05 |
 | 2012_1_2_3_15_0 | 1.29351   | 1.29355  | 1.29357  | 1.29348 | 29.1729323308    | 35.3774372328    | -0.000181261097638 | -0.000115268723952 | -6.59923736861e-05 |
 
-In this section, the dataset(s) and/or input(s) being considered for the project should be thoroughly described, such as how they relate to the problem and why they should be used. Information such as how the dataset or input is (was) obtained, and the characteristics of the dataset or input, should be included with relevant references and citations as necessary It should be clear how the dataset(s) or input(s) will be used in the project and whether their use is appropriate given the context of the problem.
+For the project, the `time` column will help to order the data chronologically. The other features will be used to predict the relative position of the next candle's `close` price.
 
 ### Solution Statement
 _(approx. 1 paragraph)_
 
-In this section, clearly describe a solution to the problem. The solution should be applicable to the project domain and appropriate for the dataset(s) or input(s) given. Additionally, describe the solution thoroughly such that it is clear that the solution is quantifiable (the solution can be expressed in mathematical or logical terms) , measurable (the solution can be measured by some metric and clearly observed), and replicable (the solution can be reproduced and occurs more than once).
+To predict the close price for the EURUSD pair, a moving window of the 20 immediately previous candles will be fed into an LSTM deep neural network. The information given to the network is the same that a human professional trader could base his/hers strategy upon, and given that there are profitable professional traders, it is reasonable to expect that a machine learning approach could achieve good results, if not better than what a human would. The approach to solve our problem will be to predict 4 classes: way_up, shy_up, shy_down, way_down. This predictions, with their respective confidences, will unable us to build a simple trading strategy that will yield simulated monetary results.
 
 ### Benchmark Model
 _(approximately 1-2 paragraphs)_
+
+I [this blog post] (https://www.quantinsti.com/blog/machine-learning-application-forex-markets-working-models/) ...
 
 In this section, provide the details for a benchmark model or result that relates to the domain, problem statement, and intended solution. Ideally, the benchmark model or result contextualizes existing methods or known information in the domain and problem given, which could then be objectively compared to the solution. Describe how the benchmark model or result is measurable (can be measured by some metric and clearly observed) with thorough detail.
 
