@@ -65,7 +65,10 @@ The main evaluation metric that I will use will be the `F-1 score`. I will use t
 ### Project Design
 _(approx. 1 page)_
 
-To arrive to a succesful solution, during the project I will undergo the following meta-steps: getting to kow the data, preprocessing the data, writing the code to feed the data, writing the model, training and tuning the model and finally testing how well a basic trading strategy would work out given those predictions. Let's break down this steps into more detail.
+To arrive to a succesful solution, during the project I will undergo the following meta-steps: 
+
+![Image of workflow]
+(Etapas_Udacity_MLE_Capstone.png)
 
 1. Getting to know the data
 
