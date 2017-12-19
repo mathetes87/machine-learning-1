@@ -4,7 +4,7 @@ import os, sys, math
 import pandas as pd
 import numpy as np
 
-class data_feed(object):
+class Data_feed(object):
 	def __init__(self, *args, **kwargs):
 		# required parameters
 		# filepath, window, percentage, dataset
