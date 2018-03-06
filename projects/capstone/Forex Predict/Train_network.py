@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from feed_data import data_feed
+from feed_data import Data_feed
 from keras.models import Sequential
 from keras.layers import Dense, LSTM, Flatten, Dropout
 from keras.callbacks import TensorBoard, ModelCheckpoint
 
 window = 64
-train_data = data_feed(filepath='data/EURUSD_M5_438K_Preprocessed.csv', window=window, percentage=0.9, dataset='train')
-test_data = data_feed(filepath='data/EURUSD_M5_438K_Preprocessed.csv', window=window, percentage=0.1, dataset='test')
+train_data = Data_feed(filepath='data/EURUSD_M5_438K_Preprocessed.csv', window=window, percentage=0.9, dataset='train')
+test_data = Data_feed(filepath='data/EURUSD_M5_438K_Preprocessed.csv', window=window, percentage=0.1, dataset='test')
 
 # design network
 model = Sequential()
@@ -28,11 +28,8 @@ history = model.fit_generator(
     steps_per_epoch=5000,
     epochs=400,
     verbose=1,
-    callbacks=[tensorboard, checkpoint],
+    #callbacks=[tensorboard, checkpoint],
     validation_data=test_data.generate(),
     validation_steps=2500,
     shuffle=False
 )
-
-# output history to plot or whatnot
-print history
